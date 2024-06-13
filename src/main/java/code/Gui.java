@@ -1,16 +1,22 @@
 package code;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Group;
-import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
-import javafx.scene.paint.*;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.*;
+import javafx.scene.shape.Box;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
-import javax.swing.text.Position;
+import java.awt.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 
@@ -133,6 +139,9 @@ class cubefactory{
 
 public class Gui extends Application {
 
+    private Group root2;
+    private Group root3;
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -162,31 +171,50 @@ public class Gui extends Application {
         Group box21 = Cubefaces.faces(Color.YELLOW, Color.BLACK, Color.BLACK, Color.ORANGE, Color.BLACK, Color.BLACK, 100, 0, 50);
         Group box22 = Cubefaces.faces(Color.YELLOW, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.RED, 50, 0, 100);
         Group box23 = Cubefaces.faces(Color.YELLOW, Color.BLACK, Color.BLACK, Color.ORANGE, Color.BLACK, Color.RED, 100, 0, 100);
-
         Group box24 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, Color.ORANGE, Color.BLACK, Color.BLACK, 100, 50, 50);
         Group box25 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, Color.ORANGE, Color.BLACK, Color.RED, 100, 50, 100);
         Group box26 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.RED, 50, 50, 100);
 
-
-
-
-
+        Group boxes[] = new Group[26];
+        boxes[0] = box1;
+        boxes[1] = box2;
+        boxes[2] = box3;
+        boxes[3] = box4;
+        boxes[4] = box5;
+        boxes[5] = box6;
+        boxes[6] = box7;
+        boxes[7] = box8;
+        boxes[8] = box9;
+        boxes[9] = box10;
+        boxes[10] = box11;
+        boxes[11] = box12;
+        boxes[12] = box13;
+        boxes[13] = box14;
+        boxes[14] = box15;
+        boxes[15] = box16;
+        boxes[16] = box17;
+        boxes[17] = box18;
+        boxes[18] = box19;
+        boxes[19] = box20;
+        boxes[20] = box21;
+        boxes[21] = box22;
+        boxes[22] = box23;
+        boxes[23] = box24;
+        boxes[24] = box25;
+        boxes[25] = box26;
 
 
         Group root1 = new Group(box1, box2, box3, box4, box5, box6, box7, box8, box9, box10, box11, box12, box13, box14, box15, box16, box17, box18, box19, box20, box21, box22, box23, box24, box25, box26);
-        Group root2 = new Group(box1, box3);
+        root2 = new Group(box1, box2, box3, box4, box5, box6, box7, box8, box9);
+
         Group root = new Group(root1, root2);
 
-
         Scene scene = new Scene(root, 800, 600, true);
-
-
 
         AtomicReference<Double> initial_X = new AtomicReference<>(0.0);
         AtomicReference<Double> initial_Y = new AtomicReference<>(0.0);
         AtomicReference<Double> initial_Angle_X = new AtomicReference<>(0.0);
         AtomicReference<Double> initial_Angle_Y = new AtomicReference<>(0.0);
-
 
         Rotate rotateX = new Rotate(0, Rotate.X_AXIS);
         Rotate rotateY = new Rotate(0, Rotate.Y_AXIS);
@@ -196,14 +224,12 @@ public class Gui extends Application {
         rotateY.setPivotY(y_position);
         root.getTransforms().addAll(rotateX, rotateY);
 
-
         root.setOnMousePressed(event -> {
             initial_X.set(event.getSceneX());
             initial_Y.set(event.getSceneY());
             initial_Angle_X.set(rotateX.getAngle());
             initial_Angle_Y.set(rotateY.getAngle());
         });
-
 
         scene.setOnMouseDragged(event -> {
             double x = event.getSceneX() - initial_X.get();
@@ -213,15 +239,58 @@ public class Gui extends Application {
             rotateY.setAngle(initial_Angle_Y.get() - x);
         });
 
+        scene.setOnKeyPressed(this::handleKeyPress);
 
         scene.setFill(Color.DARKSLATEGRAY);
+
         primaryStage.setScene(scene);
         primaryStage.setTitle("Rubiks Cube");
         primaryStage.show();
     }
 
+    private void handleKeyPress(KeyEvent event) {
+        switch (event.getCode()) {
+            case W:
+
+                Rotate rotation = new Rotate(0, 476, 376, 0, Rotate.Z_AXIS);
+                root2.getTransforms().add(rotation);
+                animateRotation(rotation, 90);
+
+
+                break;
+            case S:
+                root3.setLayoutY(root3.getLayoutY() + 10);
+
+                Rotate rotation2 = new Rotate(0, 476, 376, 0, Rotate.Z_AXIS);
+                root3.getTransforms().add(rotation2);
+                animateRotation(rotation2, 90);
+
+                break;
+            case A:
+                root2.setLayoutX(root2.getLayoutX() - 10);
+                break;
+            case D:
+                root2.setLayoutX(root2.getLayoutX() + 10);
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    private void animateRotation(Rotate rotate, double endAngle) {
+        Timeline timeline = new Timeline();
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.5), new KeyValue(rotate.angleProperty(), endAngle));
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.play();
+    }
+
+
     public void begin() {
         launch();
     }
 
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
