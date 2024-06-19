@@ -141,6 +141,7 @@ public class Gui extends Application {
     Group root5 = new Group();
     Group root6 = new Group();
 
+    Group[] theroots = {root1, root2, root3, root4, root5, root6};
 
     @Override
     public void start(Stage primaryStage) {
@@ -148,9 +149,14 @@ public class Gui extends Application {
         int x_position = 400;
         int y_position = 300;
 
+        for (int i = 0; i <6; i ++){
+            theroots[i].getChildren().addAll(allboxes[i]);
+
+        }
+
+
         Group root = new Group(root1, root2, root3, root4, root5, root6);
 
-        update();
 
         Scene scene = new Scene(root, 800, 600, true);
 
@@ -193,43 +199,26 @@ public class Gui extends Application {
         primaryStage.show();
     }
 
-    public void update() {
-        root1.getChildren().clear();
-        root2.getChildren().clear();
-        root3.getChildren().clear();
-        root4.getChildren().clear();
-        root5.getChildren().clear();
-        root6.getChildren().clear();
-        for (int i = 0; i < 9; i++) {
-            root1.getChildren().add(allboxes[0][i]);
-            root2.getChildren().add(allboxes[1][i]);
-            root3.getChildren().add(allboxes[2][i]);
-            root4.getChildren().add(allboxes[3][i]);
-            root5.getChildren().add(allboxes[4][i]);
-            root6.getChildren().add(allboxes[5][i]);
-        }
-    }
 
     private void handleKeyPress(KeyEvent event) {
-        Rotate[] roters = {new Rotate(0, 76, 76, 0, Rotate.Z_AXIS),
-                new Rotate(0, 76, 0, 76, Rotate.Y_AXIS),
-                new Rotate(0, 76, 0, 76, Rotate.Y_AXIS),
-                new Rotate(0, 0, 76, 76, Rotate.X_AXIS),
-                new Rotate(0, 0, 76, 76, Rotate.X_AXIS),
-                new Rotate(0, 76, 76, 0, Rotate.Z_AXIS)};
+        Rotate[] roters = {new Rotate(0, 476, 376, 0, Rotate.Z_AXIS),
+                new Rotate(0, 476, 0, 51, Rotate.Y_AXIS),
+                new Rotate(0, 476, 0, 51, Rotate.Y_AXIS),
+                new Rotate(0, 0, 376, 51, Rotate.X_AXIS),
+                new Rotate(0, 0, 376, 51, Rotate.X_AXIS),
+                new Rotate(0, 476, 376, 0, Rotate.Z_AXIS)};
         int a;
         Rotate rotation;
-        update();
 
         switch (event.getCode()) {
-
-
             case Q:
                 a = 0;
                 rotation = roters[a];
-                for (int i = 0; i < 9; i++) {
-                    allboxes[a][i].getTransforms().add(rotation);
-                }
+                root1.getChildren().clear();
+                root1.getChildren().addAll(allboxes[a]);
+
+                root1.getTransforms().add(rotation);
+
 
                 animateRotation(rotation, 90);
 
@@ -238,14 +227,12 @@ public class Gui extends Application {
                 break;
 
 
-
-
             case W:
                 a = 1;
                 rotation = roters[a];
-                for (int i = 0; i < 9; i++) {
-                    allboxes[a][i].getTransforms().add(rotation);
-                }
+                root2.getChildren().clear();
+                root2.getChildren().addAll(allboxes[a]);
+                root2.getTransforms().add(rotation);
 
                 animateRotation(rotation, 90);
 
@@ -258,14 +245,12 @@ public class Gui extends Application {
 
 
                 rotation = roters[a];
-                for (int i = 0; i < 9; i++) {
-                    allboxes[a][i].getTransforms().add(rotation);
-                }
+                root3.getTransforms().add(rotation);
 
                 animateRotation(rotation, 90);
 
 
-                facerotation(a);
+                //facerotation(a);
                 break;
 
             case R:
@@ -273,12 +258,10 @@ public class Gui extends Application {
 
 
                 rotation = roters[a];
-                for (int i = 0; i < 9; i++) {
-                    allboxes[a][i].getTransforms().add(rotation);
-                }
+                root4.getTransforms().add(rotation);
 
                 animateRotation(rotation, 90);
-                facerotation(a);
+                //facerotation(a);
 
                 break;
 
@@ -287,9 +270,7 @@ public class Gui extends Application {
 
 
                 rotation = roters[a];
-                for (int i = 0; i < 9; i++) {
-                    allboxes[a][i].getTransforms().add(rotation);
-                }
+                root5.getTransforms().add(rotation);
 
                 animateRotation(rotation, 90);
 
@@ -299,11 +280,8 @@ public class Gui extends Application {
             case Y:
                 a = 5;
 
-
                 rotation = roters[a];
-                for (int i = 0; i < 9; i++) {
-                    allboxes[a][i].getTransforms().add(rotation);
-                }
+                root6.getTransforms().add(rotation);
 
                 animateRotation(rotation, 90);
 
@@ -323,24 +301,26 @@ public class Gui extends Application {
     }
 
     void facerotation(int a) {
-        Group[] facerotated = {allboxes[a][6], allboxes[a][3], allboxes[a][0], allboxes[a][7], allboxes[a][4], allboxes[a][1], allboxes[a][8], allboxes[a][5], allboxes[a][2]};
 
+        Group[] original = Arrays.copyOf(allboxes[a], 9); // Create a copy of the original face
+        Group[] facerotated = {allboxes[a][2], allboxes[a][5], allboxes[a][8], allboxes[a][1], allboxes[a][4], allboxes[a][7], allboxes[a][0], allboxes[a][3], allboxes[a][6]};
+
+        // Update the current face with the rotated version
         System.arraycopy(facerotated, 0, allboxes[a], 0, 9);
 
-        //box movements in other faces
+        // Update boxes in other faces
         for (int i = 0; i < 6; i++) {
+            if (i == a) continue; // Skip the current face
             for (int j = 0; j < 9; j++) {
-                if (i == a) {
-                    continue;
-                }
-                if (allboxes[i][j] == facerotated[j]) {
-                    System.arraycopy(allboxes[a], j, allboxes[i], j, 1);
-                    //allboxes[i][j] = allboxes[a][j]
+                if (Arrays.asList(original).contains(allboxes[i][j])) {
+                    int newIndex = Arrays.asList(facerotated).indexOf(allboxes[i][j]);
+                    allboxes[i][newIndex] = allboxes[a][j]; // Update box in other face
                 }
             }
         }
 
-
+        theroots[a].getChildren().clear();
+        theroots[a].getChildren().addAll(allboxes[a]);
     }
 
 
