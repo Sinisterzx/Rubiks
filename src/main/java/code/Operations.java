@@ -2,76 +2,65 @@ package code;
 
 public class Operations {
 
-    Cube f (Cube thecube){
+    Cube red (Cube thecube){
+        int val = 0;
 
-
-        return thecube;
-    }
-
-    Cube f_prime (Cube thecube){
-
-
-        return thecube;
-    }
-
-    Cube b (Cube thecube){
-
-
-        return thecube;
-    }
-
-    Cube b_prime (Cube thecube){
-
+        rotateCube(thecube, val);
 
         return thecube;
     }
 
 
-    Cube u (Cube thecube){
+    Cube green (Cube thecube){
+        int val = 1;
 
-
-        return thecube;
-    }
-
-    Cube u_prime (Cube thecube){
-
+        rotateCube(thecube, val);
 
         return thecube;
     }
 
-    Cube d (Cube thecube){
 
+    Cube blue (Cube thecube){
+        int val = 2;
 
-        return thecube;
-    }
-
-    Cube d_prime (Cube thecube){
-
+        rotateCube(thecube, val);
 
         return thecube;
     }
 
-    Cube l (Cube thecube){
 
+    Cube yellow (Cube thecube){
+        int val = 3;
 
-        return thecube;
-    }
-
-    Cube l_prime (Cube thecube){
-
+        rotateCube(thecube, val);
 
         return thecube;
     }
 
-    Cube r (Cube thecube){
 
+
+    Cube white (Cube thecube){
+        int val = 4;
+
+        rotateCube(thecube, val);
+
+        return thecube;
+    }
+
+
+    Cube orange (Cube thecube){
+        int val = 5;
+
+        rotateCube(thecube, val);
 
         return thecube;
     }
 
-    Cube r_prime (Cube thecube){
 
-
-        return thecube;
+    private void rotateCube(Cube thecube, int val) {
+        thecube.cube[val] = new Character[]{thecube.cube[val][2], thecube.cube[val][5], thecube.cube[val][8],
+                thecube.cube[val][1], thecube.cube[val][4], thecube.cube[val][7],
+                thecube.cube[val][0], thecube.cube[val][3], thecube.cube[val][6]};
     }
+
 }

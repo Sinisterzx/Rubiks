@@ -199,6 +199,28 @@ public class Gui extends Application {
         primaryStage.show();
     }
 
+    public void redo(){
+        root1.getChildren().clear();
+        root1.getChildren().addAll(allboxes[0]);
+
+        root2.getChildren().clear();
+        root2.getChildren().addAll(allboxes[1]);
+
+        root3.getChildren().clear();
+        root3.getChildren().addAll(allboxes[2]);
+
+        root4.getChildren().clear();
+        root4.getChildren().addAll(allboxes[3]);
+
+        root5.getChildren().clear();
+        root5.getChildren().addAll(allboxes[4]);
+
+        root6.getChildren().clear();
+        root6.getChildren().addAll(allboxes[5]);
+
+
+    }
+
 
     private void handleKeyPress(KeyEvent event) {
         Rotate[] roters = {new Rotate(0, 476, 376, 0, Rotate.Z_AXIS),
@@ -209,13 +231,16 @@ public class Gui extends Application {
                 new Rotate(0, 476, 376, 0, Rotate.Z_AXIS)};
         int a;
         Rotate rotation;
+        redo();
 
         switch (event.getCode()) {
             case Q:
                 a = 0;
                 rotation = roters[a];
-                root1.getChildren().clear();
-                root1.getChildren().addAll(allboxes[a]);
+
+
+
+                redo();
 
                 root1.getTransforms().add(rotation);
 
@@ -224,26 +249,31 @@ public class Gui extends Application {
 
                 facerotation(a);
 
+
+
                 break;
 
 
             case W:
                 a = 1;
                 rotation = roters[a];
-                root2.getChildren().clear();
-                root2.getChildren().addAll(allboxes[a]);
+
+                redo();
+
                 root2.getTransforms().add(rotation);
 
                 animateRotation(rotation, 90);
 
                 facerotation(a);
 
+
                 break;
 
             case E:
                 a = 2;
 
-
+                root3.getChildren().clear();
+                root3.getChildren().addAll(allboxes[a]);
                 rotation = roters[a];
                 root3.getTransforms().add(rotation);
 
@@ -256,7 +286,8 @@ public class Gui extends Application {
             case R:
                 a = 3;
 
-
+                root4.getChildren().clear();
+                root4.getChildren().addAll(allboxes[a]);
                 rotation = roters[a];
                 root4.getTransforms().add(rotation);
 
@@ -268,24 +299,26 @@ public class Gui extends Application {
             case T:
                 a = 4;
 
-
+                root5.getChildren().clear();
+                root5.getChildren().addAll(allboxes[a]);
                 rotation = roters[a];
                 root5.getTransforms().add(rotation);
 
                 animateRotation(rotation, 90);
 
-                facerotation(a);
+                //facerotation(a);
                 break;
 
             case Y:
                 a = 5;
-
+                root6.getChildren().clear();
+                root6.getChildren().addAll(allboxes[a]);
                 rotation = roters[a];
                 root6.getTransforms().add(rotation);
 
                 animateRotation(rotation, 90);
 
-                facerotation(a);
+                //facerotation(a);
                 break;
             default:
                 break;
@@ -301,26 +334,70 @@ public class Gui extends Application {
     }
 
     void facerotation(int a) {
-
         Group[] original = Arrays.copyOf(allboxes[a], 9); // Create a copy of the original face
-        Group[] facerotated = {allboxes[a][2], allboxes[a][5], allboxes[a][8], allboxes[a][1], allboxes[a][4], allboxes[a][7], allboxes[a][0], allboxes[a][3], allboxes[a][6]};
+        int[] newIndex = {2, 5, 8, 1, 4, 7, 0, 3, 6}; // Define rotation order for each cube within the face
 
-        // Update the current face with the rotated version
-        System.arraycopy(facerotated, 0, allboxes[a], 0, 9);
+        // Swap cube references based on rotation order
+        for (int i = 0; i < 9; i++) {
+            int swapIndex = newIndex[i];
+            Group temp = allboxes[a][i];
+            allboxes[a][i] = allboxes[a][swapIndex];
+            allboxes[a][swapIndex] = temp;
+        }
 
-        // Update boxes in other faces
-        for (int i = 0; i < 6; i++) {
-            if (i == a) continue; // Skip the current face
-            for (int j = 0; j < 9; j++) {
-                if (Arrays.asList(original).contains(allboxes[i][j])) {
-                    int newIndex = Arrays.asList(facerotated).indexOf(allboxes[i][j]);
-                    allboxes[i][newIndex] = allboxes[a][j]; // Update box in other face
-                }
-            }
+        // Update boxes in other faces based on the current face rotation
+        switch (a) {
+            case 0: // Front face
+                updateAdjacentFaces(1, 3, 5, 2); // Right, Top, Back, Bottom
+                break;
+            case 1: // Right face
+                updateAdjacentFaces(0, 4, 5, 3); // Front, Bottom, Back, Top
+                break;
+            case 2: // Bottom face
+                updateAdjacentFaces(3, 1, 4, 0); // Top, Right, Left, Front
+                break;
+            case 3: // Top face
+                updateAdjacentFaces(2, 5, 4, 1); // Bottom, Back, Left, Right
+                break;
+            case 4: // Left face
+                updateAdjacentFaces(2, 0, 5, 3); // Bottom, Front, Back, Top
+                break;
+            case 5: // Back face
+                updateAdjacentFaces(1, 3, 4, 0); // Right, Top, Left, Front
+                break;
         }
 
         theroots[a].getChildren().clear();
         theroots[a].getChildren().addAll(allboxes[a]);
+    }
+
+    private void updateAdjacentFaces(int face1, int face2, int face3, int face4) {
+        Group[] temp = Arrays.copyOf(allboxes[face1], 9); // Create a copy of the adjacent face
+        int[] faceMap = {6, 3, 0, 7, 4, 1, 8, 5, 2}; // Define the mapping for adjacent face rotation
+
+        for (int i = 0; i < 9; i++) {
+            int newIndex = faceMap[i];
+            allboxes[face1][newIndex] = temp[i]; // Update the adjacent face based on the mapping
+        }
+
+        temp = Arrays.copyOf(allboxes[face2], 9);
+        for (int i = 0; i < 9; i++) {
+            int newIndex = faceMap[i];
+            allboxes[face2][i] = temp[newIndex]; // Update the adjacent face based on the mapping
+        }
+
+        temp = Arrays.copyOf(allboxes[face3], 9);
+        for (int i = 0; i < 9; i++) {
+            int newIndex = faceMap[i];
+            allboxes[face3][newIndex] = temp[i]; // Update the adjacent face based on the mapping
+        }
+
+        temp = Arrays.copyOf(allboxes[face4], 9);
+        for (int i = 0; i < 9; i++) {
+            int newIndex = faceMap[i];
+            allboxes[face4][i] = temp[newIndex]; // Update the adjacent face based on the mapping
+        }
+
     }
 
 
