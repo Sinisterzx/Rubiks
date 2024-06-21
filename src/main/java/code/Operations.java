@@ -2,65 +2,80 @@ package code;
 
 public class Operations {
 
-    Cube red (Cube thecube){
+    void red (){
         int val = 0;
 
-        rotateCube(thecube, val);
+        rotateCube(val);
 
-        return thecube;
     }
 
 
-    Cube green (Cube thecube){
+    void green (){
         int val = 1;
 
-        rotateCube(thecube, val);
-
-        return thecube;
+        rotateCube( val);
     }
 
 
-    Cube blue (Cube thecube){
+    void blue (){
         int val = 2;
 
-        rotateCube(thecube, val);
+        rotateCube(val);
+        Integer[] adjacent = Cube.maps.get(val);
+        Character[] temp = new Character[3];
+        for (int i = 0; i < adjacent.length; i++) {
 
-        return thecube;
+            if (i == 0){
+                temp[0] = Cube.cube[adjacent[i]][0];
+                temp[1] = Cube.cube[adjacent[i]][3];
+                temp[2] = Cube.cube[adjacent[i]][6];
+            }
+
+            if (i != 3){
+                Cube.cube[adjacent[i]][0] =  Cube.cube[adjacent[i+1]][0];
+                Cube.cube[adjacent[i]][3] = Cube.cube[adjacent[i+1]][3];
+                Cube.cube[adjacent[i]][6] = Cube.cube[adjacent[i+1]][6];
+
+            }else{
+                Cube.cube[adjacent[i]][0] = temp[0];
+                Cube.cube[adjacent[i]][3] = temp[1];
+                Cube.cube[adjacent[i]][6] = temp[2];
+            }
+        }
+
     }
 
 
-    Cube yellow (Cube thecube){
+    void yellow (){
         int val = 3;
 
-        rotateCube(thecube, val);
+        rotateCube(val);
 
-        return thecube;
     }
 
 
 
-    Cube white (Cube thecube){
+    void white (){
         int val = 4;
 
-        rotateCube(thecube, val);
+        rotateCube(val);
 
-        return thecube;
+
     }
 
 
-    Cube orange (Cube thecube){
+    void orange (){
         int val = 5;
 
-        rotateCube(thecube, val);
+        rotateCube(val);
 
-        return thecube;
     }
 
 
-    private void rotateCube(Cube thecube, int val) {
-        thecube.cube[val] = new Character[]{thecube.cube[val][2], thecube.cube[val][5], thecube.cube[val][8],
-                thecube.cube[val][1], thecube.cube[val][4], thecube.cube[val][7],
-                thecube.cube[val][0], thecube.cube[val][3], thecube.cube[val][6]};
+    private void rotateCube(int val) {
+        Cube.cube[val] = new Character[]{Cube.cube[val][2], Cube.cube[val][5], Cube.cube[val][8],
+                Cube.cube[val][1], Cube.cube[val][4], Cube.cube[val][7],
+                Cube.cube[val][0], Cube.cube[val][3], Cube.cube[val][6]};
     }
 
 }

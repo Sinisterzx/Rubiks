@@ -18,6 +18,7 @@ import javafx.util.Duration;
 
 import java.awt.*;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -96,14 +97,17 @@ class Cubefaces extends Group {
 
 public class Gui extends Application {
 
+    HashMap <Character, Color> chartocolor = new HashMap<Character, Color>();
+
+
     Group box1 = Cubefaces.faces(Color.YELLOW, Color.BLACK, Color.GREEN, Color.BLACK, Color.BLUE, Color.BLACK, 0, 0, 0);
     Group box2 = Cubefaces.faces(Color.YELLOW, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLUE, Color.BLACK, 50, 0, 0);
-    Group box3 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.GREEN, Color.BLACK, Color.BLUE, Color.BLACK, 0, 50, 0);
-    Group box4 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLUE, Color.BLACK, 50, 50, 0);
-    Group box5 = Cubefaces.faces(Color.YELLOW, Color.BLACK, Color.BLACK, Color.ORANGE, Color.BLUE, Color.BLACK, 100, 0, 0);
-    Group box6 = Cubefaces.faces(Color.BLACK, Color.WHITE, Color.GREEN, Color.BLACK, Color.BLUE, Color.BLACK, 0, 100, 0);
-    Group box7 = Cubefaces.faces(Color.BLACK, Color.WHITE, Color.BLACK, Color.BLACK, Color.BLUE, Color.BLACK, 50, 100, 0);
-    Group box8 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, Color.ORANGE, Color.BLUE, Color.BLACK, 100, 50, 0);
+    Group box3 = Cubefaces.faces(Color.YELLOW, Color.BLACK, Color.BLACK, Color.ORANGE, Color.BLUE, Color.BLACK, 100, 0, 0);
+    Group box4 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.GREEN, Color.BLACK, Color.BLUE, Color.BLACK, 0, 50, 0);
+    Group box5 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLUE, Color.BLACK, 50, 50, 0);
+    Group box6 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, Color.ORANGE, Color.BLUE, Color.BLACK, 100, 50, 0);
+    Group box7 = Cubefaces.faces(Color.BLACK, Color.WHITE, Color.GREEN, Color.BLACK, Color.BLUE, Color.BLACK, 0, 100, 0);
+    Group box8 = Cubefaces.faces(Color.BLACK, Color.WHITE, Color.BLACK, Color.BLACK, Color.BLUE, Color.BLACK, 50, 100, 0);
     Group box9 = Cubefaces.faces(Color.BLACK, Color.WHITE, Color.BLACK, Color.ORANGE, Color.BLUE, Color.BLACK, 100, 100, 0);
     Group box10 = Cubefaces.faces(Color.BLACK, Color.WHITE, Color.BLACK, Color.ORANGE, Color.BLACK, Color.BLACK, 100, 100, 50);
     Group box11 = Cubefaces.faces(Color.BLACK, Color.WHITE, Color.BLACK, Color.ORANGE, Color.BLACK, Color.RED, 100, 100, 100);
@@ -125,12 +129,13 @@ public class Gui extends Application {
 
 
     public Group[][] allboxes = {
-            {box1, box2, box3, box4, box5, box6, box7, box8, box9},
-            {box6, box7, box9, box14, box12, box10, box15, box13, box11},
-            {box1, box2, box5, box16, box20, box21, box17, box22, box23},
-            {box1, box3, box16, box18, box14, box6, box17, box19, box15},
-            {box5, box8, box21, box24, box10, box9, box23, box25, box11},
-            {box17, box22, box23, box19, box26, box25, box15, box13, box11}
+            {box1, box2, box3, box4, box5, box6, box7, box8, box9},  // Blue
+            {box6, box14, box15, box7, box12, box10, box9, box13, box11},  // White
+            {box1, box16, box17, box2, box20, box21, box5, box22, box23},  // Yellow
+            {box1, box3, box16, box18, box14, box6, box17, box19, box15},  // Green
+            {box5, box8, box21, box24, box10, box9, box23, box25, box11},  // Orange
+
+            {box17, box22, box23, box19, box26, box25, box15, box13, box11}  // Red
     };
 
 
@@ -149,11 +154,7 @@ public class Gui extends Application {
         int x_position = 400;
         int y_position = 300;
 
-        for (int i = 0; i <6; i ++){
-            theroots[i].getChildren().addAll(allboxes[i]);
-
-        }
-
+        refresh();
 
         Group root = new Group(root1, root2, root3, root4, root5, root6);
 
@@ -199,213 +200,46 @@ public class Gui extends Application {
         primaryStage.show();
     }
 
-    public void redo(){
-        root1.getChildren().clear();
-        root1.getChildren().addAll(allboxes[0]);
-
-        root2.getChildren().clear();
-        root2.getChildren().addAll(allboxes[1]);
-
-        root3.getChildren().clear();
-        root3.getChildren().addAll(allboxes[2]);
-
-        root4.getChildren().clear();
-        root4.getChildren().addAll(allboxes[3]);
-
-        root5.getChildren().clear();
-        root5.getChildren().addAll(allboxes[4]);
-
-        root6.getChildren().clear();
-        root6.getChildren().addAll(allboxes[5]);
-
-
-    }
-
 
     private void handleKeyPress(KeyEvent event) {
-        Rotate[] roters = {new Rotate(0, 476, 376, 0, Rotate.Z_AXIS),
-                new Rotate(0, 476, 0, 51, Rotate.Y_AXIS),
-                new Rotate(0, 476, 0, 51, Rotate.Y_AXIS),
-                new Rotate(0, 0, 376, 51, Rotate.X_AXIS),
-                new Rotate(0, 0, 376, 51, Rotate.X_AXIS),
-                new Rotate(0, 476, 376, 0, Rotate.Z_AXIS)};
-        int a;
-        Rotate rotation;
-        redo();
-
+        Operations ops = new Operations();
         switch (event.getCode()) {
             case Q:
-                a = 0;
-                rotation = roters[a];
+                ops.blue();
 
+                System.out.println(Arrays.deepToString(Cube.cube));
 
-
-                redo();
-
-                root1.getTransforms().add(rotation);
-
-
-                animateRotation(rotation, 90);
-
-                facerotation(a);
-
-
-
-                break;
-
-
-            case W:
-                a = 1;
-                rotation = roters[a];
-
-                redo();
-
-                root2.getTransforms().add(rotation);
-
-                animateRotation(rotation, 90);
-
-                facerotation(a);
-
-
-                break;
-
-            case E:
-                a = 2;
-
-                root3.getChildren().clear();
-                root3.getChildren().addAll(allboxes[a]);
-                rotation = roters[a];
-                root3.getTransforms().add(rotation);
-
-                animateRotation(rotation, 90);
-
-
-                //facerotation(a);
-                break;
-
-            case R:
-                a = 3;
-
-                root4.getChildren().clear();
-                root4.getChildren().addAll(allboxes[a]);
-                rotation = roters[a];
-                root4.getTransforms().add(rotation);
-
-                animateRotation(rotation, 90);
-                //facerotation(a);
-
-                break;
-
-            case T:
-                a = 4;
-
-                root5.getChildren().clear();
-                root5.getChildren().addAll(allboxes[a]);
-                rotation = roters[a];
-                root5.getTransforms().add(rotation);
-
-                animateRotation(rotation, 90);
-
-                //facerotation(a);
-                break;
-
-            case Y:
-                a = 5;
-                root6.getChildren().clear();
-                root6.getChildren().addAll(allboxes[a]);
-                rotation = roters[a];
-                root6.getTransforms().add(rotation);
-
-                animateRotation(rotation, 90);
-
-                //facerotation(a);
                 break;
             default:
                 break;
         }
     }
 
+    void refresh(){
 
-    private void animateRotation(Rotate rotate, double endAngle) {
-        Timeline timeline = new Timeline();
-        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.5), new KeyValue(rotate.angleProperty(), endAngle));
-        timeline.getKeyFrames().add(keyFrame);
-        timeline.play();
+
+        chartocolor.put('r', Color.RED);
+        chartocolor.put('g', Color.GREEN);
+        chartocolor.put('b', Color.BLUE);
+        chartocolor.put('y', Color.YELLOW);
+        chartocolor.put('w', Color.WHITE);
+        chartocolor.put('o', Color.ORANGE);
+
+        for (int i = 0; i < 6; i++) {
+            theroots[i].getChildren().clear();
+        }
+        for (int i = 0; i<6; i++) {
+            theroots[i].getChildren().addAll(allboxes[i]);
+        }
     }
 
-    void facerotation(int a) {
-        Group[] original = Arrays.copyOf(allboxes[a], 9); // Create a copy of the original face
-        int[] newIndex = {2, 5, 8, 1, 4, 7, 0, 3, 6}; // Define rotation order for each cube within the face
-
-        // Swap cube references based on rotation order
-        for (int i = 0; i < 9; i++) {
-            int swapIndex = newIndex[i];
-            Group temp = allboxes[a][i];
-            allboxes[a][i] = allboxes[a][swapIndex];
-            allboxes[a][swapIndex] = temp;
-        }
-
-        // Update boxes in other faces based on the current face rotation
-        switch (a) {
-            case 0: // Front face
-                updateAdjacentFaces(1, 3, 5, 2); // Right, Top, Back, Bottom
-                break;
-            case 1: // Right face
-                updateAdjacentFaces(0, 4, 5, 3); // Front, Bottom, Back, Top
-                break;
-            case 2: // Bottom face
-                updateAdjacentFaces(3, 1, 4, 0); // Top, Right, Left, Front
-                break;
-            case 3: // Top face
-                updateAdjacentFaces(2, 5, 4, 1); // Bottom, Back, Left, Right
-                break;
-            case 4: // Left face
-                updateAdjacentFaces(2, 0, 5, 3); // Bottom, Front, Back, Top
-                break;
-            case 5: // Back face
-                updateAdjacentFaces(1, 3, 4, 0); // Right, Top, Left, Front
-                break;
-        }
-
-        theroots[a].getChildren().clear();
-        theroots[a].getChildren().addAll(allboxes[a]);
-    }
-
-    private void updateAdjacentFaces(int face1, int face2, int face3, int face4) {
-        Group[] temp = Arrays.copyOf(allboxes[face1], 9); // Create a copy of the adjacent face
-        int[] faceMap = {6, 3, 0, 7, 4, 1, 8, 5, 2}; // Define the mapping for adjacent face rotation
-
-        for (int i = 0; i < 9; i++) {
-            int newIndex = faceMap[i];
-            allboxes[face1][newIndex] = temp[i]; // Update the adjacent face based on the mapping
-        }
-
-        temp = Arrays.copyOf(allboxes[face2], 9);
-        for (int i = 0; i < 9; i++) {
-            int newIndex = faceMap[i];
-            allboxes[face2][i] = temp[newIndex]; // Update the adjacent face based on the mapping
-        }
-
-        temp = Arrays.copyOf(allboxes[face3], 9);
-        for (int i = 0; i < 9; i++) {
-            int newIndex = faceMap[i];
-            allboxes[face3][newIndex] = temp[i]; // Update the adjacent face based on the mapping
-        }
-
-        temp = Arrays.copyOf(allboxes[face4], 9);
-        for (int i = 0; i < 9; i++) {
-            int newIndex = faceMap[i];
-            allboxes[face4][i] = temp[newIndex]; // Update the adjacent face based on the mapping
-        }
-
-    }
-
-
-    public void begin() {
+    public static void begin(){
         launch();
     }
 
-    public static void main(String[] args) {
-        launch(args);
+    public static void Main(String args[]){
+        launch();
+
     }
+
 }

@@ -4,11 +4,11 @@ import java.util.HashMap;
 
 public class Cube {
 
-    public Character[][] cube = new Character[6][9] ;
-    public HashMap <Integer, Integer[]> maps = new HashMap<Integer, Integer[]>() ;
+    public static Character[][] cube = new Character[6][9] ;
+    public static HashMap <Integer, Integer[]> maps = new HashMap<Integer, Integer[]>() ;
 
 
-    void initialize(){
+    static void initialize(){
         Character[] colors = {'r', 'g', 'b', 'y', 'w', 'o'};
         for (int b = 0; b<6; b++){
             for (int i = 0; i<9; i++){
