@@ -4,22 +4,16 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Box;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.awt.*;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 
@@ -84,9 +78,9 @@ class Cubefaces extends Group {
             add_z += 2;
         }
 
-        box.setLayoutX(x_position + add_x);
-        box.setLayoutY(y_position + add_y);
-        box.setTranslateZ(z_position + add_z);
+        box.setLayoutX(x_position + add_x - 50);
+        box.setLayoutY(y_position + add_y - 50);
+        box.setTranslateZ(z_position + add_z - 50);
 
 
         return box;
@@ -99,66 +93,26 @@ public class Gui extends Application {
 
     HashMap <Character, Color> chartocolor = new HashMap<Character, Color>();
 
+    Group box1, box2, box3, box4, box5, box6, box7, box8, box9, box10, box11, box12, box13,
+            box14, box15, box16, box17, box18, box19, box20, box21, box22, box23, box24, box25, box26;
 
-    Group box1 = Cubefaces.faces(Color.YELLOW, Color.BLACK, Color.GREEN, Color.BLACK, Color.BLUE, Color.BLACK, 0, 0, 0);
-    Group box2 = Cubefaces.faces(Color.YELLOW, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLUE, Color.BLACK, 50, 0, 0);
-    Group box3 = Cubefaces.faces(Color.YELLOW, Color.BLACK, Color.BLACK, Color.ORANGE, Color.BLUE, Color.BLACK, 100, 0, 0);
-    Group box4 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.GREEN, Color.BLACK, Color.BLUE, Color.BLACK, 0, 50, 0);
-    Group box5 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLUE, Color.BLACK, 50, 50, 0);
-    Group box6 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, Color.ORANGE, Color.BLUE, Color.BLACK, 100, 50, 0);
-    Group box7 = Cubefaces.faces(Color.BLACK, Color.WHITE, Color.GREEN, Color.BLACK, Color.BLUE, Color.BLACK, 0, 100, 0);
-    Group box8 = Cubefaces.faces(Color.BLACK, Color.WHITE, Color.BLACK, Color.BLACK, Color.BLUE, Color.BLACK, 50, 100, 0);
-    Group box9 = Cubefaces.faces(Color.BLACK, Color.WHITE, Color.BLACK, Color.ORANGE, Color.BLUE, Color.BLACK, 100, 100, 0);
-    Group box10 = Cubefaces.faces(Color.BLACK, Color.WHITE, Color.BLACK, Color.ORANGE, Color.BLACK, Color.BLACK, 100, 100, 50);
-    Group box11 = Cubefaces.faces(Color.BLACK, Color.WHITE, Color.BLACK, Color.ORANGE, Color.BLACK, Color.RED, 100, 100, 100);
-    Group box12 = Cubefaces.faces(Color.BLACK, Color.WHITE, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, 50, 100, 50);
-    Group box13 = Cubefaces.faces(Color.BLACK, Color.WHITE, Color.BLACK, Color.BLACK, Color.BLACK, Color.RED, 50, 100, 100);
-    Group box14 = Cubefaces.faces(Color.BLACK, Color.WHITE, Color.GREEN, Color.BLACK, Color.BLACK, Color.BLACK, 0, 100, 50);
-    Group box15 = Cubefaces.faces(Color.BLACK, Color.WHITE, Color.GREEN, Color.BLACK, Color.BLACK, Color.RED, 0, 100, 100);
-    Group box16 = Cubefaces.faces(Color.YELLOW, Color.BLACK, Color.GREEN, Color.BLACK, Color.BLACK, Color.BLACK, 0, 0, 50);
-    Group box17 = Cubefaces.faces(Color.YELLOW, Color.BLACK, Color.GREEN, Color.BLACK, Color.BLACK, Color.RED, 0, 0, 100);
-    Group box18 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.GREEN, Color.BLACK, Color.BLACK, Color.BLACK, 0, 50, 50);
-    Group box19 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.GREEN, Color.BLACK, Color.BLACK, Color.RED, 0, 50, 100);
-    Group box20 = Cubefaces.faces(Color.YELLOW, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, 50, 0, 50);
-    Group box21 = Cubefaces.faces(Color.YELLOW, Color.BLACK, Color.BLACK, Color.ORANGE, Color.BLACK, Color.BLACK, 100, 0, 50);
-    Group box22 = Cubefaces.faces(Color.YELLOW, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.RED, 50, 0, 100);
-    Group box23 = Cubefaces.faces(Color.YELLOW, Color.BLACK, Color.BLACK, Color.ORANGE, Color.BLACK, Color.RED, 100, 0, 100);
-    Group box24 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, Color.ORANGE, Color.BLACK, Color.BLACK, 100, 50, 50);
-    Group box25 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, Color.ORANGE, Color.BLACK, Color.RED, 100, 50, 100);
-    Group box26 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.RED, 50, 50, 100);
+    public Group[][] allboxes;
 
-
-    public Group[][] allboxes = {
-            // Blue face
-            {box1, box2, box3, box4, box5, box6, box7, box8, box9},
-
-            // Green face
-            {box1, box4, box7, box16, box18, box14, box17, box19, box15},
-
-            // Yellow face
-            {box1, box2, box3, box16, box20, box21, box17, box22, box23},
-
-            // White face
-            {box7, box8, box9, box14, box12, box10, box15, box13, box11},
-
-            // Orange face
-            {box3, box6, box9, box21, box24, box10, box23, box25, box11},
-
-            // Red face
-            {box17, box22, box23, box19, box26, box25, box15, box13, box11}
-    };
-
-    Group root1 = new Group();
-    Group root2 = new Group();
-    Group root3 = new Group();
-    Group root4 = new Group();
-    Group root5 = new Group();
-    Group root6 = new Group();
+    Group root1 = new Group(), root2 = new Group(), root3 = new Group(),
+             root4 = new Group(), root5 = new Group(), root6 = new Group();
 
     Group[] theroots = {root1, root2, root3, root4, root5, root6};
 
     @Override
     public void start(Stage primaryStage) {
+
+        chartocolor.put('r', Color.RED);
+        chartocolor.put('g', Color.GREEN);
+        chartocolor.put('b', Color.BLUE);
+        chartocolor.put('y', Color.YELLOW);
+        chartocolor.put('w', Color.WHITE);
+        chartocolor.put('o', Color.ORANGE);
+
 
         int x_position = 400;
         int y_position = 300;
@@ -166,7 +120,6 @@ public class Gui extends Application {
         refresh();
 
         Group root = new Group(root1, root2, root3, root4, root5, root6);
-
 
         Scene scene = new Scene(root, 800, 600, true);
 
@@ -177,12 +130,12 @@ public class Gui extends Application {
 
         Rotate rotateX = new Rotate(0, Rotate.X_AXIS);
         Rotate rotateY = new Rotate(0, Rotate.Y_AXIS);
-        rotateX.setPivotX(x_position + 76);
-        rotateX.setPivotY(y_position + 76);
-        rotateX.setPivotZ(75);
-        rotateY.setPivotX(x_position + 76);
-        rotateY.setPivotY(y_position + 76);
-        rotateY.setPivotZ(75);
+        rotateX.setPivotX(x_position + 26);
+        rotateX.setPivotY(y_position + 26);
+        rotateX.setPivotZ(26);
+        rotateY.setPivotX(x_position + 26);
+        rotateY.setPivotY(y_position + 26);
+        rotateY.setPivotZ(26);
         root.getTransforms().addAll(rotateX, rotateY);
 
         root.setOnMousePressed(event -> {
@@ -202,7 +155,7 @@ public class Gui extends Application {
 
         scene.setOnKeyPressed(this::handleKeyPress);
 
-        scene.setFill(Color.DARKSLATEGRAY);
+        scene.setFill(Color.LIGHTSLATEGREY);
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Rubiks Cube");
@@ -212,23 +165,50 @@ public class Gui extends Application {
 
     private void handleKeyPress(KeyEvent event) {
         Operations ops = new Operations();
+
+        Rotate[] roters = {new Rotate(0, 476, 376, 0, Rotate.Z_AXIS),
+                new Rotate(0, 476, 0, 51, Rotate.Y_AXIS),
+                new Rotate(0, 476, 0, 51, Rotate.Y_AXIS),
+                new Rotate(0, 0, 376, 51, Rotate.X_AXIS),
+                new Rotate(0, 0, 376, 51, Rotate.X_AXIS),
+                new Rotate(0, 476, 376, 0, Rotate.Z_AXIS)};
+        int face;
+        Rotate rotation;
+
+
         switch (event.getCode()) {
             case R:
+                face = 2;
                 ops.red(true);
                 break;
             case G:
+                face = 1;
                 ops.green(true);
                 break;
             case B:
+                face = 0;
+
+                rotation = roters[face];
+
+                root1.getTransforms().clear();
+
+                root1.getTransforms().add(rotation);
+
+                animateRotation(rotation, 90);
+
                 ops.blue(true);
+
                 break;
             case Y:
+                face = 3;
                 ops.yellow(true);
                 break;
             case W:
+                face = 4;
                 ops.white(true);
                 break;
             case O:
+                face = 5;
                 ops.orange(true);
                 break;
             default:
@@ -248,17 +228,54 @@ public class Gui extends Application {
             System.out.println();
         }
 
+        refresh();
+
     }
 
+    private void animateRotation(Rotate rotate, double endAngle) {
+        Timeline timeline = new Timeline();
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.5), new KeyValue(rotate.angleProperty(), endAngle));
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.play();
+    }
+
+
     void refresh(){
+        box1 = Cubefaces.faces(Color.WHITE, Color.BLACK, Color.RED, Color.BLACK, chartocolor.get(Cube.cube[2][0]), Color.BLACK, 0, 0, 0);
+        box2 = Cubefaces.faces(Color.WHITE, Color.BLACK, Color.BLACK, Color.BLACK, chartocolor.get(Cube.cube[2][1]), Color.BLACK, 50, 0, 0);
+        box3 = Cubefaces.faces(Color.WHITE, Color.BLACK, Color.BLACK, Color.ORANGE, chartocolor.get(Cube.cube[2][2]), Color.BLACK, 100, 0, 0);
+        box4 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.RED, Color.BLACK, chartocolor.get(Cube.cube[2][3]), Color.BLACK, 0, 50, 0);
+        box5 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, chartocolor.get(Cube.cube[2][4]), Color.BLACK, 50, 50, 0);
+        box6 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, Color.ORANGE, chartocolor.get(Cube.cube[2][5]), Color.BLACK, 100, 50, 0);
+        box7 = Cubefaces.faces(Color.BLACK, Color.YELLOW, Color.RED, Color.BLACK, chartocolor.get(Cube.cube[2][6]), Color.BLACK, 0, 100, 0);
+        box8 = Cubefaces.faces(Color.BLACK, Color.YELLOW, Color.BLACK, Color.BLACK, chartocolor.get(Cube.cube[2][7]), Color.BLACK, 50, 100, 0);
+        box9 = Cubefaces.faces(Color.BLACK, Color.YELLOW, Color.BLACK, Color.ORANGE, chartocolor.get(Cube.cube[2][8]), Color.BLACK, 100, 100, 0);
+        box10 = Cubefaces.faces(Color.BLACK, Color.YELLOW, Color.BLACK, Color.ORANGE, Color.BLACK, Color.BLACK, 100, 100, 50);
+        box11 = Cubefaces.faces(Color.BLACK, Color.YELLOW, Color.BLACK, Color.ORANGE, Color.BLACK, Color.GREEN, 100, 100, 100);
+        box12 = Cubefaces.faces(Color.BLACK, Color.YELLOW, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, 50, 100, 50);
+        box13 = Cubefaces.faces(Color.BLACK, Color.YELLOW, Color.BLACK, Color.BLACK, Color.BLACK, Color.GREEN, 50, 100, 100);
+        box14 = Cubefaces.faces(Color.BLACK, Color.YELLOW, Color.RED, Color.BLACK, Color.BLACK, Color.BLACK, 0, 100, 50);
+        box15 = Cubefaces.faces(Color.BLACK, Color.YELLOW, Color.RED, Color.BLACK, Color.BLACK, Color.GREEN, 0, 100, 100);
+        box16 = Cubefaces.faces(Color.WHITE, Color.BLACK, Color.RED, Color.BLACK, Color.BLACK, Color.BLACK, 0, 0, 50);
+        box17 = Cubefaces.faces(Color.WHITE, Color.BLACK, Color.RED, Color.BLACK, Color.BLACK, Color.GREEN, 0, 0, 100);
+        box18 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.RED, Color.BLACK, Color.BLACK, Color.BLACK, 0, 50, 50);
+        box19 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.RED, Color.BLACK, Color.BLACK, Color.GREEN, 0, 50, 100);
+        box20 = Cubefaces.faces(Color.WHITE, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, 50, 0, 50);
+        box21 = Cubefaces.faces(Color.WHITE, Color.BLACK, Color.BLACK, Color.ORANGE, Color.BLACK, Color.BLACK, 100, 0, 50);
+        box22 = Cubefaces.faces(Color.WHITE, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.GREEN, 50, 0, 100);
+        box23 = Cubefaces.faces(Color.WHITE, Color.BLACK, Color.BLACK, Color.ORANGE, Color.BLACK, Color.GREEN, 100, 0, 100);
+        box24 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, Color.ORANGE, Color.BLACK, Color.BLACK, 100, 50, 50);
+        box25 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, Color.ORANGE, Color.BLACK, Color.GREEN, 100, 50, 100);
+        box26 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.GREEN, 50, 50, 100);
 
-
-        chartocolor.put('r', Color.RED);
-        chartocolor.put('g', Color.GREEN);
-        chartocolor.put('b', Color.BLUE);
-        chartocolor.put('y', Color.YELLOW);
-        chartocolor.put('w', Color.WHITE);
-        chartocolor.put('o', Color.ORANGE);
+        allboxes = new Group[][]{
+                {box1, box2, box3, box4, box5, box6, box7, box8, box9},
+                {box1, box4, box7, box16, box18, box14, box17, box19, box15},
+                {box1, box2, box3, box16, box20, box21, box17, box22, box23},
+                {box7, box8, box9, box14, box12, box10, box15, box13, box11},
+                {box3, box6, box9, box21, box24, box10, box23, box25, box11},
+                {box17, box22, box23, box19, box26, box25, box15, box13, box11}
+        };
 
         for (int i = 0; i < 6; i++) {
             theroots[i].getChildren().clear();
