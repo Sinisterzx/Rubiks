@@ -8,9 +8,6 @@ public class Main {
         Cube.initialize();
 
 
-
-
-
         Gui gui = new Gui();
 
         gui.begin();

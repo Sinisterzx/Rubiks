@@ -129,15 +129,24 @@ public class Gui extends Application {
 
 
     public Group[][] allboxes = {
-            {box1, box2, box3, box4, box5, box6, box7, box8, box9},  // Blue
-            {box6, box14, box15, box7, box12, box10, box9, box13, box11},  // White
-            {box1, box16, box17, box2, box20, box21, box5, box22, box23},  // Yellow
-            {box1, box3, box16, box18, box14, box6, box17, box19, box15},  // Green
-            {box5, box8, box21, box24, box10, box9, box23, box25, box11},  // Orange
+            // Blue face
+            {box1, box2, box3, box4, box5, box6, box7, box8, box9},
 
-            {box17, box22, box23, box19, box26, box25, box15, box13, box11}  // Red
+            // Green face
+            {box1, box4, box7, box16, box18, box14, box17, box19, box15},
+
+            // Yellow face
+            {box1, box2, box3, box16, box20, box21, box17, box22, box23},
+
+            // White face
+            {box7, box8, box9, box14, box12, box10, box15, box13, box11},
+
+            // Orange face
+            {box3, box6, box9, box21, box24, box10, box23, box25, box11},
+
+            // Red face
+            {box17, box22, box23, box19, box26, box25, box15, box13, box11}
     };
-
 
     Group root1 = new Group();
     Group root2 = new Group();
@@ -204,15 +213,41 @@ public class Gui extends Application {
     private void handleKeyPress(KeyEvent event) {
         Operations ops = new Operations();
         switch (event.getCode()) {
-            case Q:
-                ops.blue();
-
-                System.out.println(Arrays.deepToString(Cube.cube));
-
+            case R:
+                ops.red(true);
+                break;
+            case G:
+                ops.green(true);
+                break;
+            case B:
+                ops.blue(true);
+                break;
+            case Y:
+                ops.yellow(true);
+                break;
+            case W:
+                ops.white(true);
+                break;
+            case O:
+                ops.orange(true);
                 break;
             default:
                 break;
         }
+
+        for (int i = 0; i < 6; i++){
+            for (int j = 0; j < 9; j++){
+                if (j % 3 == 0 && j != 0 ){
+                    System.out.println();
+                }
+                System.out.print(Cube.cube[i][j].toString() + ' ');
+
+            }
+
+            System.out.println();
+            System.out.println();
+        }
+
     }
 
     void refresh(){
