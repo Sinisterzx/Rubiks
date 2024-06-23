@@ -190,11 +190,11 @@ public class Gui extends Application {
 
                 rotation = roters[face];
 
-                root1.getTransforms().clear();
+                //root1.getTransforms().clear();
 
-                root1.getTransforms().add(rotation);
+                //root1.getTransforms().add(rotation);
 
-                animateRotation(rotation, 90);
+                //animateRotation(rotation, 90);
 
                 ops.blue(true);
 
@@ -241,32 +241,32 @@ public class Gui extends Application {
 
 
     void refresh(){
-        box1 = Cubefaces.faces(Color.WHITE, Color.BLACK, Color.RED, Color.BLACK, chartocolor.get(Cube.cube[2][0]), Color.BLACK, 0, 0, 0);
-        box2 = Cubefaces.faces(Color.WHITE, Color.BLACK, Color.BLACK, Color.BLACK, chartocolor.get(Cube.cube[2][1]), Color.BLACK, 50, 0, 0);
-        box3 = Cubefaces.faces(Color.WHITE, Color.BLACK, Color.BLACK, Color.ORANGE, chartocolor.get(Cube.cube[2][2]), Color.BLACK, 100, 0, 0);
-        box4 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.RED, Color.BLACK, chartocolor.get(Cube.cube[2][3]), Color.BLACK, 0, 50, 0);
+        box1 = Cubefaces.faces(chartocolor.get(Cube.cube[4][6]), Color.BLACK, chartocolor.get(Cube.cube[0][2]), Color.BLACK, chartocolor.get(Cube.cube[2][0]), Color.BLACK, 0, 0, 0);
+        box2 = Cubefaces.faces(chartocolor.get(Cube.cube[4][7]), Color.BLACK, Color.BLACK, Color.BLACK, chartocolor.get(Cube.cube[2][1]), Color.BLACK, 50, 0, 0);
+        box3 = Cubefaces.faces(chartocolor.get(Cube.cube[4][8]), Color.BLACK, Color.BLACK, chartocolor.get(Cube.cube[5][0]), chartocolor.get(Cube.cube[2][2]), Color.BLACK, 100, 0, 0);
+        box4 = Cubefaces.faces(Color.BLACK, Color.BLACK, chartocolor.get(Cube.cube[0][5]), Color.BLACK, chartocolor.get(Cube.cube[2][3]), Color.BLACK, 0, 50, 0);
         box5 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, chartocolor.get(Cube.cube[2][4]), Color.BLACK, 50, 50, 0);
-        box6 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, Color.ORANGE, chartocolor.get(Cube.cube[2][5]), Color.BLACK, 100, 50, 0);
-        box7 = Cubefaces.faces(Color.BLACK, Color.YELLOW, Color.RED, Color.BLACK, chartocolor.get(Cube.cube[2][6]), Color.BLACK, 0, 100, 0);
-        box8 = Cubefaces.faces(Color.BLACK, Color.YELLOW, Color.BLACK, Color.BLACK, chartocolor.get(Cube.cube[2][7]), Color.BLACK, 50, 100, 0);
-        box9 = Cubefaces.faces(Color.BLACK, Color.YELLOW, Color.BLACK, Color.ORANGE, chartocolor.get(Cube.cube[2][8]), Color.BLACK, 100, 100, 0);
-        box10 = Cubefaces.faces(Color.BLACK, Color.YELLOW, Color.BLACK, Color.ORANGE, Color.BLACK, Color.BLACK, 100, 100, 50);
-        box11 = Cubefaces.faces(Color.BLACK, Color.YELLOW, Color.BLACK, Color.ORANGE, Color.BLACK, Color.GREEN, 100, 100, 100);
-        box12 = Cubefaces.faces(Color.BLACK, Color.YELLOW, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, 50, 100, 50);
-        box13 = Cubefaces.faces(Color.BLACK, Color.YELLOW, Color.BLACK, Color.BLACK, Color.BLACK, Color.GREEN, 50, 100, 100);
-        box14 = Cubefaces.faces(Color.BLACK, Color.YELLOW, Color.RED, Color.BLACK, Color.BLACK, Color.BLACK, 0, 100, 50);
-        box15 = Cubefaces.faces(Color.BLACK, Color.YELLOW, Color.RED, Color.BLACK, Color.BLACK, Color.GREEN, 0, 100, 100);
-        box16 = Cubefaces.faces(Color.WHITE, Color.BLACK, Color.RED, Color.BLACK, Color.BLACK, Color.BLACK, 0, 0, 50);
-        box17 = Cubefaces.faces(Color.WHITE, Color.BLACK, Color.RED, Color.BLACK, Color.BLACK, Color.GREEN, 0, 0, 100);
-        box18 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.RED, Color.BLACK, Color.BLACK, Color.BLACK, 0, 50, 50);
-        box19 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.RED, Color.BLACK, Color.BLACK, Color.GREEN, 0, 50, 100);
-        box20 = Cubefaces.faces(Color.WHITE, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, 50, 0, 50);
-        box21 = Cubefaces.faces(Color.WHITE, Color.BLACK, Color.BLACK, Color.ORANGE, Color.BLACK, Color.BLACK, 100, 0, 50);
-        box22 = Cubefaces.faces(Color.WHITE, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.GREEN, 50, 0, 100);
-        box23 = Cubefaces.faces(Color.WHITE, Color.BLACK, Color.BLACK, Color.ORANGE, Color.BLACK, Color.GREEN, 100, 0, 100);
-        box24 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, Color.ORANGE, Color.BLACK, Color.BLACK, 100, 50, 50);
-        box25 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, Color.ORANGE, Color.BLACK, Color.GREEN, 100, 50, 100);
-        box26 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.GREEN, 50, 50, 100);
+        box6 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, chartocolor.get(Cube.cube[5][3]), chartocolor.get(Cube.cube[2][5]), Color.BLACK, 100, 50, 0);
+        box7 = Cubefaces.faces(Color.BLACK, chartocolor.get(Cube.cube[3][0]), chartocolor.get(Cube.cube[0][8]), Color.BLACK, chartocolor.get(Cube.cube[2][6]), Color.BLACK, 0, 100, 0);
+        box8 = Cubefaces.faces(Color.BLACK, chartocolor.get(Cube.cube[3][1]), Color.BLACK, Color.BLACK, chartocolor.get(Cube.cube[2][7]), Color.BLACK, 50, 100, 0);
+        box9 = Cubefaces.faces(Color.BLACK, chartocolor.get(Cube.cube[3][2]), Color.BLACK, chartocolor.get(Cube.cube[5][6]), chartocolor.get(Cube.cube[2][8]), Color.BLACK, 100, 100, 0);
+        box10 = Cubefaces.faces(Color.BLACK, chartocolor.get(Cube.cube[3][5]), Color.BLACK, chartocolor.get(Cube.cube[5][7]), Color.BLACK, Color.BLACK, 100, 100, 50);
+        box11 = Cubefaces.faces(Color.BLACK, chartocolor.get(Cube.cube[3][8]), Color.BLACK, chartocolor.get(Cube.cube[5][8]), Color.BLACK, chartocolor.get(Cube.cube[1][6]), 100, 100, 100); // 6
+        box12 = Cubefaces.faces(Color.BLACK, chartocolor.get(Cube.cube[3][4]), Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, 50, 100, 50);
+        box13 = Cubefaces.faces(Color.BLACK, chartocolor.get(Cube.cube[3][7]), Color.BLACK, Color.BLACK, Color.BLACK, chartocolor.get(Cube.cube[1][7]), 50, 100, 100); // 7
+        box14 = Cubefaces.faces(Color.BLACK, chartocolor.get(Cube.cube[3][3]), chartocolor.get(Cube.cube[0][7]), Color.BLACK, Color.BLACK, Color.BLACK, 0, 100, 50);
+        box15 = Cubefaces.faces(Color.BLACK, chartocolor.get(Cube.cube[3][6]), chartocolor.get(Cube.cube[0][6]), Color.BLACK, Color.BLACK, chartocolor.get(Cube.cube[1][8]), 0, 100, 100);  // 8
+        box16 = Cubefaces.faces(chartocolor.get(Cube.cube[4][3]), Color.BLACK, chartocolor.get(Cube.cube[0][1]), Color.BLACK, Color.BLACK, Color.BLACK, 0, 0, 50);
+        box17 = Cubefaces.faces(chartocolor.get(Cube.cube[4][0]), Color.BLACK, chartocolor.get(Cube.cube[0][0]), Color.BLACK, Color.BLACK, chartocolor.get(Cube.cube[1][2]), 0, 0, 100); /// 2
+        box18 = Cubefaces.faces(Color.BLACK, Color.BLACK, chartocolor.get(Cube.cube[0][4]), Color.BLACK, Color.BLACK, Color.BLACK, 0, 50, 50);
+        box19 = Cubefaces.faces(Color.BLACK, Color.BLACK, chartocolor.get(Cube.cube[0][3]), Color.BLACK, Color.BLACK, chartocolor.get(Cube.cube[1][5]), 0, 50, 100); // 5
+        box20 = Cubefaces.faces(chartocolor.get(Cube.cube[4][4]), Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, 50, 0, 50);
+        box21 = Cubefaces.faces(chartocolor.get(Cube.cube[4][5]), Color.BLACK, Color.BLACK, chartocolor.get(Cube.cube[5][1]), Color.BLACK, Color.BLACK, 100, 0, 50);
+        box22 = Cubefaces.faces(chartocolor.get(Cube.cube[4][1]), Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, chartocolor.get(Cube.cube[1][1]), 50, 0, 100); // 1
+        box23 = Cubefaces.faces(chartocolor.get(Cube.cube[4][2]), Color.BLACK, Color.BLACK, chartocolor.get(Cube.cube[5][2]), Color.BLACK, chartocolor.get(Cube.cube[1][0]), 100, 0, 100); // 0
+        box24 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, chartocolor.get(Cube.cube[5][4]), Color.BLACK, Color.BLACK, 100, 50, 50);
+        box25 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK,chartocolor.get(Cube.cube[5][5]), Color.BLACK, chartocolor.get(Cube.cube[1][3]), 100, 50, 100); // 3
+        box26 = Cubefaces.faces(Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, Color.BLACK, chartocolor.get(Cube.cube[1][4]), 50, 50, 100); // 4
 
         allboxes = new Group[][]{
                 {box1, box2, box3, box4, box5, box6, box7, box8, box9},
