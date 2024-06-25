@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.event.Event;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
@@ -103,6 +104,8 @@ public class Gui extends Application {
 
     Group[] theroots = {root1, root2, root3, root4, root5, root6};
 
+    Rotate[] roters;
+
     @Override
     public void start(Stage primaryStage) {
 
@@ -166,69 +169,85 @@ public class Gui extends Application {
     private void handleKeyPress(KeyEvent event) {
         Operations ops = new Operations();
 
-        Rotate[] roters = {new Rotate(0, 476, 376, 0, Rotate.Z_AXIS),
-                new Rotate(0, 476, 0, 51, Rotate.Y_AXIS),
-                new Rotate(0, 476, 0, 51, Rotate.Y_AXIS),
-                new Rotate(0, 0, 376, 51, Rotate.X_AXIS),
-                new Rotate(0, 0, 376, 51, Rotate.X_AXIS),
-                new Rotate(0, 476, 376, 0, Rotate.Z_AXIS)};
         int face;
-        Rotate rotation;
 
+        roters = new Rotate[]{new Rotate(0, 426, 326, 0, Rotate.Z_AXIS),
+                new Rotate(0, 0, 326, 1, Rotate.X_AXIS),
+                new Rotate(0, 426, 0, 1, Rotate.Y_AXIS),
+                new Rotate(0, 426, 0, 1, Rotate.Y_AXIS),
+                new Rotate(0, 0, 326, 1, Rotate.X_AXIS),
+                new Rotate(0, 426, 326, 0, Rotate.Z_AXIS)};
 
+        for (int i = 0; i<6; i++){
+            theroots[i].getChildren().clear();
+        }
+        // issue with green and yellow and orange
         switch (event.getCode()) {
             case R:
-                face = 2;
+                face = 1;
+
+                faceanimate(face);
                 ops.red(true);
+                animateRotation(roters[face], 90);
+
                 break;
             case G:
-                face = 1;
+                face = 5;
+
+                faceanimate(face);
                 ops.green(true);
+                animateRotation(roters[face], -90);
+
                 break;
             case B:
                 face = 0;
 
-                rotation = roters[face];
-
-                //root1.getTransforms().clear();
-
-                //root1.getTransforms().add(rotation);
-
-                //animateRotation(rotation, 90);
-
+                faceanimate(face);
                 ops.blue(true);
+                animateRotation(roters[face], 90);
 
                 break;
             case Y:
                 face = 3;
+
+                faceanimate(face);
                 ops.yellow(true);
+                animateRotation(roters[face], -90);
+
                 break;
             case W:
-                face = 4;
+                face = 2;
+
+                faceanimate(face);
                 ops.white(true);
+                animateRotation(roters[face], 90);
+
                 break;
             case O:
-                face = 5;
+                face = 4;
+
+                faceanimate(face);
                 ops.orange(true);
+                animateRotation(roters[face], -90);
+
                 break;
             default:
+                refresh();
                 break;
         }
+    }
 
-        for (int i = 0; i < 6; i++){
-            for (int j = 0; j < 9; j++){
-                if (j % 3 == 0 && j != 0 ){
-                    System.out.println();
-                }
-                System.out.print(Cube.cube[i][j].toString() + ' ');
-
+    private void faceanimate(int face){
+        for (int i = 0; i<6; i++){
+            if (i != face) {
+                theroots[i].getChildren().addAll(allboxes[i]);
             }
-
-            System.out.println();
-            System.out.println();
         }
+        theroots[face].getChildren().addAll(allboxes[face]);
 
-        refresh();
+        theroots[face].getTransforms().clear();
+
+        theroots[face].getTransforms().add(roters[face]);
 
     }
 
@@ -236,7 +255,31 @@ public class Gui extends Application {
         Timeline timeline = new Timeline();
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.5), new KeyValue(rotate.angleProperty(), endAngle));
         timeline.getKeyFrames().add(keyFrame);
+        timeline.setOnFinished(event ->{
+            for (int i = 0; i<6; i++){
+                theroots[i].getTransforms().clear();
+            }
+
+
+            for (int i = 0; i < 6; i++){
+                for (int j = 0; j < 9; j++){
+                    if (j % 3 == 0 && j != 0 ){
+                        System.out.println();
+                    }
+                    System.out.print(Cube.cube[i][j].toString() + ' ');
+
+                }
+
+                System.out.println();
+                System.out.println();
+            }
+
+
+            refresh();
+        });
         timeline.play();
+
+
     }
 
 
@@ -281,7 +324,9 @@ public class Gui extends Application {
             theroots[i].getChildren().clear();
         }
         for (int i = 0; i<6; i++) {
-            theroots[i].getChildren().addAll(allboxes[i]);
+            for (int j = 0; j < 9; j++) {
+                theroots[i].getChildren().add(allboxes[i][j]);
+            }
         }
     }
 
