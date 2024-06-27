@@ -4,15 +4,18 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.event.Event;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.control.Button;
+import javafx.geometry.Insets;
 
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicReference;
@@ -124,7 +127,28 @@ public class Gui extends Application {
 
         Group root = new Group(root1, root2, root3, root4, root5, root6);
 
-        Scene scene = new Scene(root, 800, 600, true);
+
+        Button shuffle_button = new Button("Shuffle");
+        Button solve_button = new Button("Solve");
+
+        HBox buttonBox = new HBox(10, shuffle_button, solve_button);
+        buttonBox.setAlignment(Pos.CENTER);
+
+        VBox rubiks_box = new VBox(10, root);
+
+
+        rubiks_box.setAlignment(Pos.CENTER);
+
+
+        VBox mainLayout = new VBox(100, rubiks_box, buttonBox);
+        mainLayout.setBackground(Background.EMPTY);
+
+
+        mainLayout.setAlignment(Pos.CENTER);
+
+
+        Scene scene = new Scene(mainLayout, 800, 600, true);
+
 
         AtomicReference<Double> initial_X = new AtomicReference<>(0.0);
         AtomicReference<Double> initial_Y = new AtomicReference<>(0.0);
@@ -158,8 +182,8 @@ public class Gui extends Application {
 
         scene.setOnKeyPressed(this::handleKeyPress);
 
-        scene.setFill(Color.LIGHTSLATEGREY);
 
+        scene.setFill(Color.DARKKHAKI);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Rubiks Cube");
         primaryStage.show();
@@ -253,7 +277,7 @@ public class Gui extends Application {
 
     private void animateRotation(Rotate rotate, double endAngle) {
         Timeline timeline = new Timeline();
-        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.5), new KeyValue(rotate.angleProperty(), endAngle));
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.1), new KeyValue(rotate.angleProperty(), endAngle));
         timeline.getKeyFrames().add(keyFrame);
         timeline.setOnFinished(event ->{
             for (int i = 0; i<6; i++){
