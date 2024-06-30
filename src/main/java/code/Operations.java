@@ -1,6 +1,26 @@
 package code;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+
+import javax.swing.*;
+import java.time.*;
+import java.util.Random;
+import java.util.random.*;
 
 public class Operations {
+
+    public static void shuffle(){
+        Character keys[] = {'R', 'T', 'G', 'H', 'B', 'N', 'Y', 'U', 'W', 'E', 'O', 'P'};
+
+        Random rand = new Random();
+
+        Character pressed_letter = keys[rand.nextInt(keys.length)];
+        int pressed_key = java.awt.event.KeyEvent.getExtendedKeyCodeForChar(pressed_letter);
+
+
+
+
+    }
 
     void red(boolean clockwise) {
         int val = 0;

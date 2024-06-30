@@ -95,19 +95,47 @@ class Cubefaces extends Group {
 
 public class Gui extends Application {
 
-    HashMap <Character, Color> chartocolor = new HashMap<Character, Color>();
+    static HashMap <Character, Color> chartocolor = new HashMap<Character, Color>();
 
-    Group box1, box2, box3, box4, box5, box6, box7, box8, box9, box10, box11, box12, box13,
-            box14, box15, box16, box17, box18, box19, box20, box21, box22, box23, box24, box25, box26;
+    static Group box1;
+    static Group box2;
+    static Group box3;
+    static Group box4;
+    static Group box5;
+    static Group box6;
+    static Group box7;
+    static Group box8;
+    static Group box9;
+    static Group box10;
+    static Group box11;
+    static Group box12;
+    static Group box13;
+    static Group box14;
+    static Group box15;
+    static Group box16;
+    static Group box17;
+    static Group box18;
+    static Group box19;
+    static Group box20;
+    static Group box21;
+    static Group box22;
+    static Group box23;
+    static Group box24;
+    static Group box25;
+    static Group box26;
 
-    public Group[][] allboxes;
+    public static Group[][] allboxes;
 
-    Group root1 = new Group(), root2 = new Group(), root3 = new Group(),
-             root4 = new Group(), root5 = new Group(), root6 = new Group();
+    static Group root1 = new Group();
+    static Group root2 = new Group();
+    static Group root3 = new Group();
+    static Group root4 = new Group();
+    static Group root5 = new Group();
+    static Group root6 = new Group();
 
-    Group[] theroots = {root1, root2, root3, root4, root5, root6};
+    static Group[] theroots = {root1, root2, root3, root4, root5, root6};
 
-    Rotate[] roters;
+    static Rotate[] roters;
 
     @Override
     public void start(Stage primaryStage) {
@@ -131,11 +159,14 @@ public class Gui extends Application {
         Button shuffle_button = new Button("Shuffle");
         Button solve_button = new Button("Solve");
 
+
+        shuffle_button.setOnAction(e -> {Operations.shuffle();});
+        solve_button.setOnAction(e -> {System.out.println("solution: 42");});
+
         HBox buttonBox = new HBox(10, shuffle_button, solve_button);
         buttonBox.setAlignment(Pos.CENTER);
 
         VBox rubiks_box = new VBox(10, root);
-
 
         rubiks_box.setAlignment(Pos.CENTER);
 
@@ -180,7 +211,7 @@ public class Gui extends Application {
             rotateY.setAngle(initial_Angle_Y.get() - x);
         });
 
-        scene.setOnKeyPressed(this::handleKeyPress);
+        scene.setOnKeyPressed(event ->{handleKeyPress(event);});
 
 
         scene.setFill(Color.DARKKHAKI);
@@ -190,7 +221,7 @@ public class Gui extends Application {
     }
 
 
-    private void handleKeyPress(KeyEvent event) {
+    public static void handleKeyPress(KeyEvent event) {
         Operations ops = new Operations();
 
         int face;
@@ -205,54 +236,89 @@ public class Gui extends Application {
         for (int i = 0; i<6; i++){
             theroots[i].getChildren().clear();
         }
-        // issue with green and yellow and orange
+
         switch (event.getCode()) {
             case R:
                 face = 1;
-
                 faceanimate(face);
                 ops.red(true);
                 animateRotation(roters[face], 90);
 
                 break;
+            case T:
+                face = 1;
+                faceanimate(face);
+                ops.red(false);
+                animateRotation(roters[face], -90);
+
+                break;
             case G:
                 face = 5;
-
                 faceanimate(face);
                 ops.green(true);
                 animateRotation(roters[face], -90);
 
                 break;
+            case H:
+                face = 5;
+                faceanimate(face);
+                ops.green(false);
+                animateRotation(roters[face], 90);
+                break;
             case B:
                 face = 0;
-
                 faceanimate(face);
                 ops.blue(true);
                 animateRotation(roters[face], 90);
 
                 break;
+            case N:
+                face = 0;
+                faceanimate(face);
+                ops.blue(false);
+                animateRotation(roters[face], -90);
+                break;
             case Y:
                 face = 3;
-
                 faceanimate(face);
                 ops.yellow(true);
                 animateRotation(roters[face], -90);
 
                 break;
+            case U:
+                face = 3;
+                faceanimate(face);
+                ops.yellow(false);
+                animateRotation(roters[face], 90);
+
+                break;
             case W:
                 face = 2;
-
                 faceanimate(face);
                 ops.white(true);
                 animateRotation(roters[face], 90);
 
                 break;
+            case E:
+                face = 2;
+                faceanimate(face);
+                ops.white(false);
+                animateRotation(roters[face], -90);
+
+                break;
+
             case O:
                 face = 4;
-
                 faceanimate(face);
                 ops.orange(true);
                 animateRotation(roters[face], -90);
+
+                break;
+            case P:
+                face = 4;
+                faceanimate(face);
+                ops.orange(false);
+                animateRotation(roters[face], 90);
 
                 break;
             default:
@@ -261,7 +327,7 @@ public class Gui extends Application {
         }
     }
 
-    private void faceanimate(int face){
+    private static void faceanimate(int face){
         for (int i = 0; i<6; i++){
             if (i != face) {
                 theroots[i].getChildren().addAll(allboxes[i]);
@@ -275,7 +341,7 @@ public class Gui extends Application {
 
     }
 
-    private void animateRotation(Rotate rotate, double endAngle) {
+    private static void animateRotation(Rotate rotate, double endAngle) {
         Timeline timeline = new Timeline();
         KeyFrame keyFrame = new KeyFrame(Duration.seconds(0.1), new KeyValue(rotate.angleProperty(), endAngle));
         timeline.getKeyFrames().add(keyFrame);
@@ -307,7 +373,7 @@ public class Gui extends Application {
     }
 
 
-    void refresh(){
+    static void refresh(){
         box1 = Cubefaces.faces(chartocolor.get(Cube.cube[4][6]), Color.BLACK, chartocolor.get(Cube.cube[0][2]), Color.BLACK, chartocolor.get(Cube.cube[2][0]), Color.BLACK, 0, 0, 0);
         box2 = Cubefaces.faces(chartocolor.get(Cube.cube[4][7]), Color.BLACK, Color.BLACK, Color.BLACK, chartocolor.get(Cube.cube[2][1]), Color.BLACK, 50, 0, 0);
         box3 = Cubefaces.faces(chartocolor.get(Cube.cube[4][8]), Color.BLACK, Color.BLACK, chartocolor.get(Cube.cube[5][0]), chartocolor.get(Cube.cube[2][2]), Color.BLACK, 100, 0, 0);
