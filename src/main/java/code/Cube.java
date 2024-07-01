@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class Cube {
 
     public static Character[][] cube = new Character[6][9] ;
-    public static HashMap <Integer, Integer[]> maps = new HashMap<Integer, Integer[]>() ;
+    public static HashMap <Integer, Integer[]> maps = new HashMap<Integer, Integer[]>();
 
 
     static void initialize(){

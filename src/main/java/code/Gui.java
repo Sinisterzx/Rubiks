@@ -160,7 +160,13 @@ public class Gui extends Application {
         Button solve_button = new Button("Solve");
 
 
-        shuffle_button.setOnAction(e -> {Operations.shuffle();});
+        shuffle_button.setOnAction(event -> {
+            try {
+                Operations.shuffle();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        });
         solve_button.setOnAction(e -> {System.out.println("solution: 42");});
 
         HBox buttonBox = new HBox(10, shuffle_button, solve_button);
@@ -222,104 +228,42 @@ public class Gui extends Application {
 
 
     public static void handleKeyPress(KeyEvent event) {
-        Operations ops = new Operations();
-
-        int face;
-
-        roters = new Rotate[]{new Rotate(0, 426, 326, 0, Rotate.Z_AXIS),
-                new Rotate(0, 0, 326, 1, Rotate.X_AXIS),
-                new Rotate(0, 426, 0, 1, Rotate.Y_AXIS),
-                new Rotate(0, 426, 0, 1, Rotate.Y_AXIS),
-                new Rotate(0, 0, 326, 1, Rotate.X_AXIS),
-                new Rotate(0, 426, 326, 0, Rotate.Z_AXIS)};
-
-        for (int i = 0; i<6; i++){
-            theroots[i].getChildren().clear();
-        }
-
         switch (event.getCode()) {
             case R:
-                face = 1;
-                faceanimate(face);
-                ops.red(true);
-                animateRotation(roters[face], 90);
-
+                rotation_abstraction(true, 1);
                 break;
             case T:
-                face = 1;
-                faceanimate(face);
-                ops.red(false);
-                animateRotation(roters[face], -90);
-
+                rotation_abstraction(false, 1);
                 break;
             case G:
-                face = 5;
-                faceanimate(face);
-                ops.green(true);
-                animateRotation(roters[face], -90);
-
+                rotation_abstraction(true, 5);
                 break;
             case H:
-                face = 5;
-                faceanimate(face);
-                ops.green(false);
-                animateRotation(roters[face], 90);
+                rotation_abstraction(false, 5);
                 break;
             case B:
-                face = 0;
-                faceanimate(face);
-                ops.blue(true);
-                animateRotation(roters[face], 90);
-
+                rotation_abstraction(true, 0);
                 break;
             case N:
-                face = 0;
-                faceanimate(face);
-                ops.blue(false);
-                animateRotation(roters[face], -90);
+                rotation_abstraction(false, 0);
                 break;
             case Y:
-                face = 3;
-                faceanimate(face);
-                ops.yellow(true);
-                animateRotation(roters[face], -90);
-
+                rotation_abstraction(true, 3);
                 break;
             case U:
-                face = 3;
-                faceanimate(face);
-                ops.yellow(false);
-                animateRotation(roters[face], 90);
-
+                rotation_abstraction(false, 3);
                 break;
             case W:
-                face = 2;
-                faceanimate(face);
-                ops.white(true);
-                animateRotation(roters[face], 90);
-
+                rotation_abstraction(true, 2);
                 break;
             case E:
-                face = 2;
-                faceanimate(face);
-                ops.white(false);
-                animateRotation(roters[face], -90);
-
+                rotation_abstraction(false, 2);
                 break;
-
             case O:
-                face = 4;
-                faceanimate(face);
-                ops.orange(true);
-                animateRotation(roters[face], -90);
-
+                rotation_abstraction(true, 4);
                 break;
             case P:
-                face = 4;
-                faceanimate(face);
-                ops.orange(false);
-                animateRotation(roters[face], 90);
-
+                rotation_abstraction(false, 4);
                 break;
             default:
                 refresh();
@@ -338,6 +282,49 @@ public class Gui extends Application {
         theroots[face].getTransforms().clear();
 
         theroots[face].getTransforms().add(roters[face]);
+
+    }
+
+    public static void rotation_abstraction(Boolean clockwise, int face){
+        int endangle;
+        if (face == 0 ||face == 1 || face == 2){
+            if (clockwise){
+                endangle = 90;
+            }else{
+                 endangle = -90;
+            }
+        }else{
+            if (clockwise){
+                endangle = -90;
+            }else{
+                endangle = 90;
+            }
+        }
+        Operations ops = new Operations();
+
+        roters = new Rotate[]{new Rotate(0, 426, 326, 0, Rotate.Z_AXIS),
+                new Rotate(0, 0, 326, 1, Rotate.X_AXIS),
+                new Rotate(0, 426, 0, 1, Rotate.Y_AXIS),
+                new Rotate(0, 426, 0, 1, Rotate.Y_AXIS),
+                new Rotate(0, 0, 326, 1, Rotate.X_AXIS),
+                new Rotate(0, 426, 326, 0, Rotate.Z_AXIS)};
+
+        for (int i = 0; i<6; i++){
+            theroots[i].getChildren().clear();
+        }
+
+        HashMap <Integer, Integer> gui_to_arr = new HashMap<>();
+        gui_to_arr.put(0,2);
+        gui_to_arr.put(1,0);
+        gui_to_arr.put(2,4);
+        gui_to_arr.put(3,3);
+        gui_to_arr.put(4,5);
+        gui_to_arr.put(5,1);
+
+
+        faceanimate(face);
+        ops.color_op(gui_to_arr.get(face), clockwise);
+        animateRotation(roters[face], endangle);
 
     }
 

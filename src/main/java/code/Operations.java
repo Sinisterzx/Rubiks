@@ -5,64 +5,53 @@ import javafx.scene.input.KeyEvent;
 import javax.swing.*;
 import java.time.*;
 import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.random.*;
 
 public class Operations {
 
-    public static void shuffle(){
-        Character keys[] = {'R', 'T', 'G', 'H', 'B', 'N', 'Y', 'U', 'W', 'E', 'O', 'P'};
+    public static void shuffle() throws InterruptedException {
+        Integer keys[] = {0, 1, 2, 3, 4, 5};
 
         Random rand = new Random();
-
-        Character pressed_letter = keys[rand.nextInt(keys.length)];
-        int pressed_key = java.awt.event.KeyEvent.getExtendedKeyCodeForChar(pressed_letter);
+        int rotations = rand.nextInt(50, 70);
 
 
-
+        for (int i = 0; i < rotations; i++) {
+            Integer pressed_face = keys[rand.nextInt(keys.length)];
+            Boolean direction = rand.nextBoolean();
+            Gui.rotation_abstraction(direction, pressed_face);
+        }
 
     }
 
-    void red(boolean clockwise) {
-        int val = 0;
-        rotateCube(val);
-        rotateAdjacentFaces(val, new int[][]{{6, 3, 0}, {2, 5, 8}, {6, 3, 0}, {6, 3, 0}}, clockwise);
+    public void color_op(int colorval, boolean clockwise){
+        int[][][] faceroter = {{{6, 3, 0}, {2, 5, 8}, {6, 3, 0}, {6, 3, 0}},
+                {{8, 7, 6}, {6, 3, 0}, {0, 1, 2}, {2, 5, 8}},
+                {{0, 1, 2}, {6, 3, 0}, {8, 7, 6}, {2, 5, 8}},
+                {{6, 7, 8}, {6, 7, 8}, {6, 7, 8}, {6, 7, 8}},
+                {{0, 1, 2}, {0, 1, 2}, {0, 1, 2}, {0, 1, 2}},
+                {{2, 5, 8}, {6, 3, 0}, {2, 5, 8}, {2, 5, 8}}};
+
+        rotateCube(colorval, clockwise);
+        rotateAdjacentFaces(colorval, faceroter[colorval], clockwise);
+
     }
 
-    void green(boolean clockwise) {
-        int val = 1;
-        rotateCube(val);
-        rotateAdjacentFaces(val, new int[][]{{8, 7, 6}, {6, 3, 0}, {0, 1, 2}, {2, 5, 8}}, clockwise);
-    }
-
-    void blue(boolean clockwise) {
-        int val = 2;
-        rotateCube(val);
-        rotateAdjacentFaces(val, new int[][]{{0, 1, 2}, {6, 3, 0}, {8, 7, 6}, {2, 5, 8}}, clockwise);
-    }
-
-    void yellow(boolean clockwise) {
-        int val = 3;
-        rotateCube(val);
-        rotateAdjacentFaces(val, new int[][]{{6, 7, 8}, {6, 7, 8}, {6, 7, 8}, {6, 7, 8}}, clockwise);
-    }
-
-    void white(boolean clockwise) {
-        int val = 4;
-        rotateCube(val);
-        rotateAdjacentFaces(val, new int[][]{{0, 1, 2}, {0, 1, 2}, {0, 1, 2}, {0, 1, 2}}, clockwise);
-    }
-
-    void orange(boolean clockwise) {
-        int val = 5;
-        rotateCube(val);
-        rotateAdjacentFaces(val, new int[][]{{2, 5, 8}, {6, 3, 0}, {2, 5, 8}, {2, 5, 8}}, clockwise);
-    }
-
-    private void rotateCube(int val) {
-        Cube.cube[val] = new Character[]{
-                Cube.cube[val][6], Cube.cube[val][3], Cube.cube[val][0],
-                Cube.cube[val][7], Cube.cube[val][4], Cube.cube[val][1],
-                Cube.cube[val][8], Cube.cube[val][5], Cube.cube[val][2]};
+    private void rotateCube(int val, Boolean clockwise) {
+        if (clockwise) {
+            Cube.cube[val] = new Character[]{
+                    Cube.cube[val][6], Cube.cube[val][3], Cube.cube[val][0],
+                    Cube.cube[val][7], Cube.cube[val][4], Cube.cube[val][1],
+                    Cube.cube[val][8], Cube.cube[val][5], Cube.cube[val][2]};
+        }else{
+            Cube.cube[val] = new Character[]{
+                    Cube.cube[val][2], Cube.cube[val][5], Cube.cube[val][8],
+                    Cube.cube[val][1], Cube.cube[val][4], Cube.cube[val][7],
+                    Cube.cube[val][0], Cube.cube[val][3], Cube.cube[val][6]};
+        }
     }
 
     private void rotateAdjacentFaces(int face, int[][] indices, Boolean clockwise) {
