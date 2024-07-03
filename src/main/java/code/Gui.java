@@ -167,7 +167,7 @@ public class Gui extends Application {
                 ex.printStackTrace();
             }
         });
-        solve_button.setOnAction(e -> {System.out.println("solution: 42");});
+        solve_button.setOnAction(e -> {Sequence.execute_seq();});
 
         HBox buttonBox = new HBox(10, shuffle_button, solve_button);
         buttonBox.setAlignment(Pos.CENTER);
@@ -230,40 +230,40 @@ public class Gui extends Application {
     public static void handleKeyPress(KeyEvent event) {
         switch (event.getCode()) {
             case R:
-                rotation_abstraction(true, 1);
+                rotation_abstraction(true, 1, true);
                 break;
             case T:
-                rotation_abstraction(false, 1);
+                rotation_abstraction(false, 1, true);
                 break;
             case G:
-                rotation_abstraction(true, 5);
+                rotation_abstraction(true, 5, true);
                 break;
             case H:
-                rotation_abstraction(false, 5);
+                rotation_abstraction(false, 5, true);
                 break;
             case B:
-                rotation_abstraction(true, 0);
+                rotation_abstraction(true, 0, true);
                 break;
             case N:
-                rotation_abstraction(false, 0);
+                rotation_abstraction(false, 0, true);
                 break;
             case Y:
-                rotation_abstraction(true, 3);
+                rotation_abstraction(true, 3, true);
                 break;
             case U:
-                rotation_abstraction(false, 3);
+                rotation_abstraction(false, 3, true);
                 break;
             case W:
-                rotation_abstraction(true, 2);
+                rotation_abstraction(true, 2, true);
                 break;
             case E:
-                rotation_abstraction(false, 2);
+                rotation_abstraction(false, 2, true);
                 break;
             case O:
-                rotation_abstraction(true, 4);
+                rotation_abstraction(true, 4, true);
                 break;
             case P:
-                rotation_abstraction(false, 4);
+                rotation_abstraction(false, 4, true);
                 break;
             default:
                 refresh();
@@ -285,7 +285,7 @@ public class Gui extends Application {
 
     }
 
-    public static void rotation_abstraction(Boolean clockwise, int face){
+    public static void rotation_abstraction(Boolean clockwise, int face, Boolean store){
         int endangle;
         if (face == 0 ||face == 1 || face == 2){
             if (clockwise){
@@ -311,6 +311,10 @@ public class Gui extends Application {
 
         for (int i = 0; i<6; i++){
             theroots[i].getChildren().clear();
+        }
+
+        if (store) {
+            Sequence.add_seq(clockwise, face);
         }
 
         HashMap <Integer, Integer> gui_to_arr = new HashMap<>();

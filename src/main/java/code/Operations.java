@@ -22,7 +22,7 @@ public class Operations {
         for (int i = 0; i < rotations; i++) {
             Integer pressed_face = keys[rand.nextInt(keys.length)];
             Boolean direction = rand.nextBoolean();
-            Gui.rotation_abstraction(direction, pressed_face);
+            Gui.rotation_abstraction(direction, pressed_face, true);
         }
 
     }
