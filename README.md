@@ -26,7 +26,7 @@ The 'Shuffle' and 'Solve Buttons' can be switched between by pressing the arrow 
 
  **[Rubiks App-1.0.dmg](assets/Rubiks\ App-1.0.dmg)** 
 
-This is the .dmg installer for Mac OS 
+***There will be a warning on installation*** *because I havent had the program notarized and signed by apple. Unless you want to fiddle around with security settings I recommend just downloading the .jar file found below*
 
  
 
