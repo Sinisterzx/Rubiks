@@ -24,7 +24,7 @@ The 'Shuffle' and 'Solve Buttons' can be switched between by pressing the arrow 
 
 #### Mac OS 
 
- **[Rubiks App-1.0.dmg](assets/Rubiks\ App-1.0.dmg)** 
+ **[Rubiks App-1.0.dmg](assets/Rubiks_App-1.0.dmg)** 
 
 ***There will be a warning on installation*** *because I havent had the program notarized and signed by apple. Unless you want to fiddle around with security settings I recommend just downloading the .jar file found below*
 
